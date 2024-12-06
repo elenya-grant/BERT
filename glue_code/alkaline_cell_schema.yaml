@@ -1,0 +1,248 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: electrolyzer_model_options_schema_v00
+title: electrolyzer modeling options schema
+description: Schema that describes the modeling options for `electrolyzer`
+type: object
+properties:
+    alkaline_cell:
+        type: object
+        default: {}
+        description: Alkaline cell parameters
+        properties:
+            model:
+                type: string
+                default: default_hri
+                description: Alkaline cell construction
+            pressure_operating:
+                type: number
+                default: 
+                minimum: <30
+                maximum: more than 70
+                unit: bar
+                description: Cell operating pressure
+            temperature_operating:
+                type: number
+                default: 60 #
+                minimum: 
+                maximum: 100
+                unit: C
+                description: Cell operating temperature
+
+            turndown_ratio:
+                type: number
+                minimum: 0.1
+                maximum: 1
+                default: 0.25
+                description: Minimum operating power as a fraction of rated power
+            min_current_density: #optional
+                type: number
+                minimum: 
+                maximum: 
+                default: 
+                units: A/cm^2
+                description: Minimum current density
+            max_current_density:
+                type: number
+                minimum: 0.5
+                maximum: 2 #maybe 3 - lower efficiency
+                default: 
+                units: A/cm^2
+                description: Maximum current density
+            faradaic_coefficients:
+                type: object
+                default: {}
+                description: Alkaline electrode parameters
+                properties:
+                    f1:
+                        type: number
+                        minimum: 150
+                        maximum: 300
+                        default: 250
+                        description: coefficient
+                        units: mA^2/cm^4
+                    f2:
+                        type: number
+                        minimum: 0.90
+                        maximum: 1.0
+                        default: 0.96
+                        description: coefficient
+                        units: none
+            electrode:
+                type: object
+                default: {}
+                description: Alkaline electrode parameters
+                properties:
+                    A_electrode:
+                        type: number
+                        minimum: 
+                        maximum: 30000
+                        default: 300
+                        description: electrode total area
+                        units: cm^2
+                    d_ac:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 0.25
+                        description: anode-cathode distance
+                        units: cm
+                    material:
+                        type: object
+                        default: {}
+                        description: Alkaline nickle electrode parameters
+                        properties:
+                            electrode_material:
+                                type: string
+                                default: nickle
+                                description: anode and cathode material
+                            tref:
+                                type: number
+                                default: 25
+                                description: reference temperature
+                                units: C
+                            temp_coeff:
+                                type: number
+                                default: 0.00586
+                                description: temperature coefficient
+                                units: C
+                            rho_ref:
+                                type: number
+                                default: 6.4e-6
+                                description: resistivity of 100% dense electrode at tref
+                                units: Ohm-cm
+                            epislon_ref:
+                                type: number
+                                default: 0.3
+                                description: porosity of electrode
+                                units: 
+                    
+            anode:
+                type: object
+                default: {}
+                description: Alkaline electrolyte parameters
+                properties:
+                    e_a:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 0.2
+                        description: anode thickness
+                        units: cm
+                    d_am:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 0.125
+                        description: anode-membrane distance
+                        units: cm
+                    gamma_a:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 1.25
+                        description: anode roughness factor
+                        units: cm
+
+                    jref_0a:
+                        type: number
+                        default: 1.34535e-5 # * 10 ** (-5) 
+                        description: reference exchange current density anode
+                        units: A/cm^2
+                    Tref_0a:
+                        type: number
+                        default: 25
+                        description: temperature for jref_0a
+                        units: C
+                    delta_Ga:
+                        type: number
+                        default: 41500
+                        description: Free energy of Activation anode
+                        units: J/mol*K
+            cathode:
+                type: object
+                default: {}
+                description: Alkaline electrolyte parameters
+                properties:
+                    gamma_c:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 1.05
+                        description: cathode roughness factor
+                        units: cm
+                    e_c:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 0.2
+                        description: cathode thickness
+                        units: cm
+                    d_cm:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 0.125
+                        description: cathode-membrane distance
+                        units: cm
+
+                    jref_0c:
+                        type: number
+                        default: 1.8456e-3 # * 10 ** (-5) 
+                        description: reference exchange current density cathode
+                        units: A/cm^2
+                    Tref_0c:
+                        type: number
+                        default: 25
+                        description: temperature for jref_0c
+                        units: C
+                    delta_Gc:
+                        type: number
+                        default: 23450
+                        description: Free energy of Activation cathode
+                        units: J/mol*K
+            electrolyte:
+                type: object
+                default: {}
+                description: Alkaline electrolyte parameters
+                properties:
+                    w_koh:
+                        type: number
+                        default: 30
+                        minimum: 25
+                        maximum: 33
+                        units: wt. %
+                        description: Percent KOH by weight
+                    density_of_water:
+                        type: number
+                        default: 1
+                        minimum: 
+                        maximum: 
+                        units: g/mL
+                        description: density of water
+                    density_of_KOH:
+                        type: number
+                        default: 2.12
+                        minimum: 
+                        maximum: 
+                        units: g/mL
+                        description: density of KOH
+            membrane:
+                type: object
+                default: {}
+                description: Alkaline membrane parameters
+                properties:
+                    A_membrane:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 300
+                        units: cm^2
+                        description: membrane surface area
+                    e_m:
+                        type: number
+                        minimum: 
+                        maximum: 
+                        default: 0.05
+                        units: cm
+                        description: membrane thickness
+
